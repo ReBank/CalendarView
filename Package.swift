@@ -4,23 +4,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "CalendarView-iOS",
+    name: "CalendarView",
     defaultLocalization: "en",
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "CalendarView-iOS",
-            targets: ["CalendarView-iOS"]),
+            name: "CalendarView",
+            targets: ["CalendarView"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "CalendarView-iOS",
+            name: "CalendarView",
             path: "Calendar/Source"
         ),
         .testTarget(
             name: "CalendarView-iOSTests",
-            dependencies: ["CalendarView-iOS"]),
+            dependencies: ["CalendarView"]),
     ]
 )
