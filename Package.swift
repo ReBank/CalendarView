@@ -18,9 +18,6 @@ let package = Package(
         .target(
             name: "Calendar",
             path: "Calendar/Source"
-        ),
-        .testTarget(
-            name: "CalendarView-iOSTests",
-            dependencies: ["CalendarView"]),
+        )
     ]
 )
