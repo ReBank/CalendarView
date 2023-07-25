@@ -10,49 +10,47 @@ import UIKit
 
 protocol Nibable {
 
-  var insets: UIEdgeInsets { get }
+    var insets: UIEdgeInsets { get }
 
-  func prepareView()
+    func prepareView()
 }
 
 extension Nibable where Self: UIView {
 
-  var insets: UIEdgeInsets {
-    return .zero
-  }
-
-  func prepareView() {
-    let nameForXib = xibName()
-    let nibs = Bundle(for: CalendarView.self).loadNibNamed(nameForXib, owner: self, options: nil)
-    if let view = nibs?.first as? UIView {
-      view.backgroundColor = UIColor.clear
-      view.translatesAutoresizingMaskIntoConstraints = false
-
-      let views = [
-        "subview": view
-      ]
-      let metrics = [
-        "left": insets.left,
-        "right": insets.right,
-        "top": insets.top,
-        "bottom": insets.bottom
-      ]
-
-      addSubview(view)
-      var constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-left-[subview]-right-|",
-                                                       options: [.alignAllLeading, .alignAllTrailing],
-                                                       metrics: metrics,
-                                                       views: views)
-      constraints.append(contentsOf: NSLayoutConstraint.constraints(withVisualFormat: "V:|-top-[subview]-bottom-|",
-                                                                    options: [.alignAllTop, .alignAllBottom],
-                                                                    metrics: metrics,
-                                                                    views: views))
-      NSLayoutConstraint.activate(constraints)
+    var insets: UIEdgeInsets {
+        return .zero
     }
-  }
 
-  private func xibName() -> String {
-    let xibName = String(describing: type(of: self)).components(separatedBy: ".").last ?? ""
-    return xibName
-  }
+    func prepareView() {
+        let nib = Bundle.main.loadNibNamed(
+            "CalendarView",
+            owner: self,
+            options: nil
+        )
+        if let view = nib?.first as? UIView {
+            view.backgroundColor = UIColor.clear
+            view.translatesAutoresizingMaskIntoConstraints = false
+
+            let views = [
+                "subview": view
+            ]
+            let metrics = [
+                "left": insets.left,
+                "right": insets.right,
+                "top": insets.top,
+                "bottom": insets.bottom
+            ]
+
+            addSubview(view)
+            var constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-left-[subview]-right-|",
+                                                             options: [.alignAllLeading, .alignAllTrailing],
+                                                             metrics: metrics,
+                                                             views: views)
+            constraints.append(contentsOf: NSLayoutConstraint.constraints(withVisualFormat: "V:|-top-[subview]-bottom-|",
+                                                                          options: [.alignAllTop, .alignAllBottom],
+                                                                          metrics: metrics,
+                                                                          views: views))
+            NSLayoutConstraint.activate(constraints)
+        }
+    }
 }
